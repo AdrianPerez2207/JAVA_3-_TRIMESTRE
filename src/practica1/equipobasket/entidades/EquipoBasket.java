@@ -94,7 +94,7 @@ public class EquipoBasket {
      * @param dorsal
      * @return el jugador.
      */
-    public JugadorBasket buscarJugadore(Integer dorsal){
+    public JugadorBasket buscarJugadores(Integer dorsal){
         for(JugadorBasket jugadorBasket: jugadores){
             if(jugadorBasket.getDorsal() == dorsal){
                 return jugadorBasket;
