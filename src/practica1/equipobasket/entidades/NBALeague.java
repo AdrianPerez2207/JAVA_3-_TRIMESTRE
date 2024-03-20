@@ -11,6 +11,14 @@ public class NBALeague {
         this.equipos = new HashMap<>();
         this.equiposOrdenados = new TreeMap<>();
     }
+
+    public HashMap<String, EquipoBasket> getEquipos() {
+        return equipos;
+    }
+
+    public TreeMap<String, EquipoBasket> getEquiposOrdenados() {
+        return equiposOrdenados;
+    }
     //Métodos
 
     /**
@@ -60,20 +68,22 @@ public class NBALeague {
     /**
      * Recorremos los equipos, y dentro de los equipos a cada jugador, si la altura
      * de ese jugador es más alta que la del anterior, se guarda su altura y el su información.
+     * Creamos un Array y guardamos la altura y el jugador en el Array.
      * @return el jugador más alto.
      */
     public JugadorBasket buscarJugadorAlto(){
-        JugadorBasket jugadorAlto = null;
-        Double alturaMaxima = 0.0;
-        for (EquipoBasket equipo : equipos.values()) {
-            for (JugadorBasket jugador : equipo.getJugadores()){
-                if (jugador.getAltura() > alturaMaxima){
-                    alturaMaxima = jugador.getAltura();
-                    jugadorAlto = jugador;
+        final JugadorBasket[] jugadorAlto = {null};
+        final Double[] alturaMaxima = {0.0};
+
+        equipos.forEach(( nombre , equipo) -> {
+            equipo.getJugadores().forEach(jugadorBasket -> {
+                if (jugadorBasket.getAltura() > alturaMaxima[0]){
+                    alturaMaxima[0] = jugadorBasket.getAltura();
+                    jugadorAlto[0] = jugadorBasket;
                 }
-            }
-        }
-        return jugadorAlto;
+            });
+        });
+        return jugadorAlto[0];
     }
 
     /**
@@ -82,14 +92,15 @@ public class NBALeague {
      * @return el equipo con más partidos ganados.
      */
     public EquipoBasket buscarPartidosGanados(){
-        Double partidosGanados = 0.0;
-        EquipoBasket equipoMasPartidos = null;
-        for (EquipoBasket equipo : equipos.values()) {
-            if (equipo.getPartidosGanados() > partidosGanados){
-                partidosGanados = equipo.getPartidosGanados();
-                equipoMasPartidos = equipo;
+        final Double[] partidosGanados = {0.0};
+        final EquipoBasket[] equipoMasPartidos = {null};
+
+        equipos.forEach(( nombre , equipo) -> {
+            if (equipo.getPartidosGanados() > partidosGanados[0]){
+                partidosGanados[0] = equipo.getPartidosGanados();
+                equipoMasPartidos[0] = equipo;
             }
-        }
-        return equipoMasPartidos;
+        });
+        return equipoMasPartidos[0];
     }
 }
