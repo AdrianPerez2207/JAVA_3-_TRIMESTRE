@@ -1,7 +1,6 @@
 package practica1.equipobasket.entidades;
 
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class NBALeague {
     private HashMap<String, EquipoBasket> equipos;
@@ -66,81 +65,29 @@ public class NBALeague {
     }
 
     /**
-     * Recorremos los equipos, y dentro de los equipos a cada jugador, si la altura
-     * de ese jugador es más alta que la del anterior, se guarda su altura y el su información.
-     * Creamos un Array y guardamos la altura y el jugador en el Array.
+     * Recorremos los equipos, añadimos todos los jugadores a una lista.
+     * Con List.sort y unafunción lambda comparamos la altura de los jugadores y devolvemos el primero de la lista.
+     * Comparamos al revés ya que añadiría de menor a mayor.
      * @return el jugador más alto.
      */
     public JugadorBasket buscarJugadorAlto(){
-        //Evitar hacer esto
-        final JugadorBasket[] jugadorAlto = {null};
-        final Double[] alturaMaxima = {0.0};
-
-        equipos.forEach(( nombre , equipo) -> {
-            equipo.getJugadores().forEach(jugador -> {
-                if (jugador.getAltura() > alturaMaxima[0]){
-                    alturaMaxima[0] = jugador.getAltura();
-                    jugadorAlto[0] = jugador;
-                }
-            });
-        });
-        return jugadorAlto[0];
-        /*  Versión 1:
-            for(String equipo : equipos.keySet()){
-                for(JugadorBasket jugador : equipos.get(equipo).getJugadores()){
-                    if(jugador.getAltura() > alturaMaxima){
-                        alturaMaxima = jugador.getAltura();
-                        jugadorAlto = jugador;
-                    }
-                }
-            } */
-        /* Versión 2:
-            List<Jugador> jugadores = new ArrayList<>();
-            for (String equipo : equipos.keySet()){
-                jugadores.addAll(equipos.get(equipo).getJugadores());
-            }
-            Collections.sort(jugadores, new Comparator<jugador>(){
-            @Override
-            public int compare(Jugador o1, Jugador o2) {
-                return o1.getAltura().compareTo(o2);
-            }
-            } );
-            return jugadores.get(0);
-         */
-        /* Versión 3:
-        jugador j1 = null;
-        //Ordenan de menor a mayor, si queremos el mayor, comparamos al revés.
-            Set<Jugador> jugadores = new TreeSet<>((j1,j2) -> jugador2.queAltura().compareTo(jugador1.getAltura()));
-            for (String equipo : equipos.keySet()){
-                jugadores.addAll(equipos.get(equipo).getJugadores());
-            }
-            for(String jugador : jugadores){
-                if(jugador.getAltura() > alturaMaxima){
-                    jugador1 = jugador;
-                    break;
-                }
-                return jugador1;
-            }
-
-
-         */
+        List<JugadorBasket> jugadoresAltos = new ArrayList<>();
+        for (String equipo : equipos.keySet()){
+            jugadoresAltos.addAll(equipos.get(equipo).getJugadores());
+        }
+       jugadoresAltos.sort((j1, j2) -> j2.getAltura().compareTo(j1.getAltura()));
+        return jugadoresAltos.get(0);
     }
 
     /**
-     * Buscamos en los equipos y comparamos sus partidos ganados, el que más tenga
-     * se guarda su información.
+     * Creamos una lista de Equipos, le añadimos los equipos de la liga.
+     * Con List.sort y una función lambda comparamos la altura de los jugadores y devolvemos el primero de la lista.
+     * Comparamos al revés ya que añadiría de menor a mayor.
      * @return el equipo con más partidos ganados.
      */
-    public EquipoBasket buscarPartidosGanados(){
-        final Double[] partidosGanados = {0.0};
-        final EquipoBasket[] equipoMasPartidos = {null};
-
-        equipos.forEach(( nombre , equipo) -> {
-            if (equipo.getPartidosGanados() > partidosGanados[0]){
-                partidosGanados[0] = equipo.getPartidosGanados();
-                equipoMasPartidos[0] = equipo;
-            }
-        });
-        return equipoMasPartidos[0];
+    public EquipoBasket buscarPartidosGanados() {
+        List<EquipoBasket> equiposConMasPartidos = new ArrayList<>(this.equiposOrdenados.values());
+        equiposConMasPartidos.sort(((e1, e2) -> e2.getPartidosGanados().compareTo(e1.getPartidosGanados())));
+        return equiposConMasPartidos.get(0);
     }
 }
