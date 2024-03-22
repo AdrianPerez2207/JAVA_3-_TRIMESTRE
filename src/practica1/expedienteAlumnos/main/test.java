@@ -8,9 +8,6 @@ import java.time.LocalDate;
 public class test {
 
     public static void main(String[] args) {
-        //Prueba las clases (es laborioso, lo sé) añadiendo unos alumnos, con notas para un par de cursos (1º grado superior
-        //daw y 2º grado superior daw). Luego busca el expediente de uno de los alumnos y muéstralo correctamente.
-
         //Creamos los estudiantes.
         Estudiante e1 = new Estudiante("22436575J", "Adrián", "Pérez Sánchez", LocalDate.of(1996, 7,22)
                 , "Calle La Algarroba 27", "Cuevas del Almanzora", "adrianJaroso@gmail.com", "687654321");
