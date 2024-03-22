@@ -3,7 +3,7 @@ package practica1.expedienteAlumnos.entidades;
 import java.util.HashSet;
 import java.util.Objects;
 
-public class Expediente {
+public class Expediente implements Comparable<Expediente>{
     private Estudiante estudiante;
     private HashSet<NotasCurso> notas;
     private boolean activo;
@@ -71,7 +71,7 @@ public class Expediente {
      * @param curso
      * @param etapa
      */
-    public void mostrarNotas(Integer curso, String etapa){
+    public void mostrarNotas(Integer curso, EtapaEducativa etapa){
         for (NotasCurso nc : this.notas) {
             if (nc.getCurso().equals(curso) && nc.getEtapaEducativa().equals(etapa)) {
                 System.out.println(nc);
@@ -85,10 +85,15 @@ public class Expediente {
      * @param curso
      * @param etapa
      */
-    public void mostrarNotasStreams(Integer curso, String etapa){
+    public void mostrarNotasStreams(Integer curso, EtapaEducativa etapa){
         notas.stream()
                 .filter(notasCurso -> notasCurso.getCurso().equals(curso))
                 .filter(notasCurso -> notasCurso.getEtapaEducativa().equals(etapa))
                 .forEach(System.out::println);
+    }
+
+    @Override
+    public int compareTo(Expediente o) {
+        return estudiante.getDni().compareTo(o.estudiante.getDni());
     }
 }

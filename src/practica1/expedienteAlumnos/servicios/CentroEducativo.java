@@ -5,7 +5,7 @@ import practica1.expedienteAlumnos.entidades.Expediente;
 import java.util.Objects;
 import java.util.TreeSet;
 
-public class CentroEducativo {
+public class CentroEducativo{
     private TreeSet<Expediente> expedientes;
     private String nombreCentro;
     private String direccion;
@@ -92,7 +92,8 @@ public class CentroEducativo {
     }
     //Métodos---
     public void addExpediente(Expediente expediente) {
-        this.expedientes.add(expediente);
+
+        expedientes.add(expediente);
     }
 
     /**
