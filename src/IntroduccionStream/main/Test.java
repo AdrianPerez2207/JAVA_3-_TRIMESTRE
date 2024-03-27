@@ -27,6 +27,86 @@ public class Test {
         }
         return registros;
     }
+    private static void EjercicioJ(List<Registro> registros) {
+        Double temperaturaPromedio = registros.stream()
+                .mapToDouble(registro -> registro.getTemperatura())
+                .average()
+                .orElseThrow(NoSuchElementException::new);
+        System.out.println(temperaturaPromedio);
+        System.out.println();
+    }
+
+    private static void ejercicioI(List<Registro> registros) {
+        Long cuentaTemperatura= registros.stream()
+                .filter(registro -> registro.getTemperatura() > 35)
+                .count();
+        System.out.println(cuentaTemperatura);
+        System.out.println();
+    }
+
+    private static void ejercicioH(List<Registro> registros) {
+        registros.stream()
+                .sorted((r1,r2) -> r1.getFechaHora().compareTo(r2.getFechaHora()))
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    private static void ejercicioG(List<Registro> registros) {
+        registros.stream()
+                .skip(5)
+                .limit(10)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    private static void ejercicioF(List<Registro> registros) {
+        registros.stream()
+                .filter(registro -> registro.getTemperatura() > 30)
+                .filter(registro -> registro.getHumedad() > 90)
+                .filter(registro -> registro.getFechaHora().equals(LocalDateTime.now()))
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    private static void ejercicioE(List<Registro> registros) {
+        Registro registro3 = registros.stream()
+                .filter(registro -> registro.getHumedad() > 80)
+                .min(Comparator.comparing(Registro::getTemperatura))
+                .orElseThrow(NoSuchElementException::new);
+        System.out.println(registro3);
+        System.out.println();
+    }
+
+    private static void ejercicioD(List<Registro> registros) {
+        registros.stream()
+                .peek(registro -> registro.setHumedad(registro.getHumedad() + 5.0))
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    private static void ejercicioC(List<Registro> registros) {
+        registros.stream()
+                .map(registro -> registro.getFechaHora())
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    private static void ejercicioB(List<Registro> registros) {
+        Registro maximaTemperatura = registros.stream()
+                .max(Comparator.comparing(Registro::getTemperatura))
+                .orElseThrow(NoSuchElementException::new);
+        System.out.println(maximaTemperatura);
+        System.out.println();
+    }
+
+    private static void ejercicioA(List<Registro> registros) {
+        registros.stream()
+                .filter(registro -> registro.getTemperatura() > 25)
+                .filter(registro -> registro.getHumedad() < 70)
+                .filter(registro -> registro.getFechaHora().isBefore(LocalDateTime.now()))
+                .forEach(System.out::println);
+        System.out.println();
+    }
 
     public static void main(String[] args) {
         List<Registro> registros = crearRegistros(100, LocalDateTime.of(2024, 3,21,
@@ -34,104 +114,58 @@ public class Test {
         //a. Filtrar los registros de temperatura que sean mayores a 25 grados, la humedad sea menor a 70
         // y la fecha sea anterior a la fecha actual, y mostrarlos.
         System.out.println("----------Filtrado temperatura, humedad y fecha---------");
-        registros.stream()
-                .filter(registro -> registro.getTemperatura() > 25)
-                .filter(registro -> registro.getHumedad() < 70)
-                .filter(registro -> registro.getFechaHora().isBefore(LocalDateTime.now()))
-                .forEach(System.out::println);
-        System.out.println();
+        ejercicioA(registros);
 
 
         //b. Encontrar el registro con la temperatura más alta y mostrar el registro completo.
         System.out.println("----------Temperatura máxima---------");
-        Registro maximaTemperatura = registros.stream()
-                .max(Comparator.comparing(Registro::getTemperatura))
-                .orElseThrow(NoSuchElementException::new);
-        System.out.println(maximaTemperatura);
-        System.out.println();
+        ejercicioB(registros);
 
 
         //c. Obtener una lista con las fechas/horas de todas las tomas de datos.
         System.out.println("----------Fecha/Hora---------");
-        registros.stream()
-                .map(registro -> registro.getFechaHora())
-                .forEach(System.out::println);
-        System.out.println();
-
-
+        ejercicioC(registros);
 
 
         //d. Incrementar en 5 unidades la humedad de todos los registros y mostrar las temperaturas,
         //humedades y fechas/horas actualizadas.
         System.out.println("----------Humedad añadida---------");
-        registros.stream()
-                .peek(registro -> registro.setHumedad(registro.getHumedad() + 5.0))
-                .forEach(System.out::println);
-        System.out.println();
+        ejercicioD(registros);
 
 
         //e. Encontrar el registro con la temperatura más baja que tenga una humedad mayor a 80 y
         //mostrar la temperatura, humedad y fecha.
         System.out.println("----------Temperatura más baja con humedad > 80---------");
-        Registro registro3 = registros.stream()
-                .filter(registro -> registro.getHumedad() > 80)
-                .min(Comparator.comparing(Registro::getTemperatura))
-                .orElseThrow(NoSuchElementException::new);
-        System.out.println(registro3);
-        System.out.println();
-
+        ejercicioE(registros);
 
 
         //f. Verificar si algún registro tiene una temperatura mayor a 30 grados, humedad mayor a 90 y
         //la fecha es de hoy. Mostrar un mensaje indicando si hay algún registro que cumple esta
         //condición o no.
         System.out.println("----------Temperatura mayor a 30 grados y humedad > 90---------");
-        registros.stream()
-                .filter(registro -> registro.getTemperatura() > 30)
-                .filter(registro -> registro.getHumedad() > 90)
-                .filter(registro -> registro.getFechaHora().equals(LocalDateTime.now()));
-        System.out.println();
+        ejercicioF(registros);
 
 
         //g. Muestra 10 registros saltándote los 5 primeros.
         System.out.println("----------10 registros saltándote los 5 primeros---------");
-        registros.stream()
-                .skip(5)
-                .limit(10)
-                .forEach(System.out::println);
-        System.out.println();
+        ejercicioG(registros);
 
 
         //h. Muestra los registros ordenados por fecha (sorted(Comparator))
         // Como expresión lambda: (r1,r2) -> r1.getFechaHora().compareTo(r2.getFechaHora())
         System.out.println("----------Registros ordenador por fecha---------");
-        registros.stream()
-                .sorted((r1,r2) -> r1.getFechaHora().compareTo(r2.getFechaHora()))
-                .forEach(System.out::println);
-        System.out.println();
-
+        ejercicioH(registros);
 
 
         //i. Cuenta los registros que tengan temperatura mayor a 35 grados (count()).
         System.out.println("----------Temperatura mayor a 35º---------");
-        Long cuentaTemperatura= registros.stream()
-                .filter(registro -> registro.getTemperatura() > 35)
-                .count();
-        System.out.println(cuentaTemperatura);
-        System.out.println();
-
+        ejercicioI(registros);
 
 
         //j. Calcular la temperatura promedio de todos los registros (transformarlo en Stream<Double>
         //y llamar a average())
         System.out.println("----------Temperatura promedio---------");
-        Double temperaturaPromedio = registros.stream()
-                .mapToDouble(registro -> registro.getTemperatura())
-                .average()
-                .orElseThrow(NoSuchElementException::new);
-        System.out.println(temperaturaPromedio);
-        System.out.println();
-
+        EjercicioJ(registros);
 
 
     }
