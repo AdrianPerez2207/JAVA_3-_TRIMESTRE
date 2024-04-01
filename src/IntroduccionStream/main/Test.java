@@ -96,6 +96,16 @@ public class Test {
                 .orElseThrow(NoSuchElementException::new);
         System.out.println(maximaTemperatura);
         System.out.println();
+        //Nos quedamos solo con la temperatura y pintamos la maxima (sólo pinta el número de la temperatura)
+        //registros.stream()
+        //       .map(registro -> registro.getTemperatura())
+        //       .max()
+        //       .ifPresent(System.out::println);
+
+        //Comparamos las temperaturas y pintamos el registro completo.
+        //registros.stream()
+        //       .max(Comparator.compating(Registro::getTemperatura))
+        //       .ifPresent(System.out::println);
     }
 
     private static void ejercicioA(List<Registro> registros) {
