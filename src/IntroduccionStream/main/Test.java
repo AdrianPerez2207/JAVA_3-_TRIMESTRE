@@ -2,6 +2,7 @@ package IntroduccionStream.main;
 
 import IntroduccionStream.entidades.Registro;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -60,12 +61,10 @@ public class Test {
     }
 
     private static void ejercicioF(List<Registro> registros) {
-        registros.stream()
-                .filter(registro -> registro.getTemperatura() > 30)
-                .filter(registro -> registro.getHumedad() > 90)
-                .filter(registro -> registro.getFechaHora().equals(LocalDateTime.now()))
-                .forEach(System.out::println);
-        System.out.println();
+
+        System.out.println(registros.stream()
+                .anyMatch(registro -> registro.getTemperatura() > 30 && registro.getHumedad() > 90
+                        && registro.getFechaHora().toLocalDate().equals(LocalDate.now())));
     }
 
     private static void ejercicioE(List<Registro> registros) {
