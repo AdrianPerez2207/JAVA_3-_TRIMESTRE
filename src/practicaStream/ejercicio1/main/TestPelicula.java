@@ -85,6 +85,30 @@ public class TestPelicula {
                 .forEach(System.out::println);
         System.out.println();
 
+        /**
+         * tituloMasLargo(): muestra la película cuyo título es más largo
+         * Para comparar el máximo, comparamos las longitudes cómo números enteros.
+         * Si hay alguno más largo (ifPresent) lo pintamos.
+         */
+        System.out.println("Película con título más largo: ");
+        Stream.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
+                .max(Comparator.comparingInt(pelicula -> pelicula.getTitulo().length()))
+                .ifPresent(System.out::println);
+        System.out.println();
+
+        /**
+         * directoresMayúsculas(): muestra los nombres de los directores ordenados y en mayúsculas.
+         * Con flatMap nos quedamos solo con los directores de las películas y lo pasamos a Stream
+         * Con sorted lo ordenamos, con distrinct nos no pinta los repetidos
+         * Con forEach pintamos los nombres de los directores en Mayúsculas.
+         */
+        System.out.println("Directores ordenados y en mayúsculas: ");
+        Stream.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
+                .flatMap(pelicula -> pelicula.getDirectores().stream())
+                .sorted(Comparator.comparing(Director::getNombre))
+                .distinct()
+                .forEach(director -> System.out.println(director.getNombre().toUpperCase()));
+        System.out.println();
 
     }
 }
