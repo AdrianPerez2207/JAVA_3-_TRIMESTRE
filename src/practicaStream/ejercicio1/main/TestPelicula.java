@@ -6,6 +6,7 @@ import practicaStream.ejercicio1.entidades.Pelicula;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestPelicula {
@@ -87,7 +88,7 @@ public class TestPelicula {
 
         /**
          * tituloMasLargo(): muestra la película cuyo título es más largo
-         * Para comparar el máximo, comparamos las longitudes cómo números enteros.
+         * Para comparar el máximo, comparamos las longitudes cómo números enteros (compartingInt).
          * Si hay alguno más largo (ifPresent) lo pintamos.
          */
         System.out.println("Película con título más largo: ");
@@ -109,6 +110,34 @@ public class TestPelicula {
                 .distinct()
                 .forEach(director -> System.out.println(director.getNombre().toUpperCase()));
         System.out.println();
+
+        /**
+         * numPelis(): muestra el director y al lado el número de películas de cada director. Hay que usar
+         * collect.
+         */
+        System.out.println("Director y número de películas: ");
+        Stream.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
+                .flatMap(pelicula -> pelicula.getDirectores().stream())
+                .collect(Collectors.groupingBy(Director::getNombre, Collectors.counting()))
+                .forEach((director, numPelis) -> System.out.println(director + " - " + numPelis));
+        System.out.println();
+        /**
+         * dramaYMafia(): muestra todas las películas de drama y mafia. Usa dos Predicate (sobre todos
+         * los géneros con anyMatch) y únelos con ‘and’
+         */
+        System.out.println("Películas de drama y mafia: ");
+        Stream.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
+                .filter(pelicula -> pelicula.getGeneros().stream()
+                        .anyMatch(genero -> (genero.getNombre().equals("Drama") && genero.getNombre().equals("Mafia"))))
+                .forEach(System.out::println);
+        System.out.println();
+        /**
+         * filmografías(): muestra las películas de cada director ordenadas por año. Que aparezca nombre
+         * de director y debajo sus películas ordenadas por año.
+         */
+        System.out.println("Filmografías: ");
+        Stream.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+
 
     }
 }
