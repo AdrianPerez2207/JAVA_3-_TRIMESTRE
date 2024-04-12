@@ -62,6 +62,9 @@ public class Pedido {
     public Set<Producto> getProductos() {
         return productos;
     }
+    public void setProductos(Set<Producto> productos) {
+        this.productos = productos;
+    }
 
     @Override
     public String toString() {

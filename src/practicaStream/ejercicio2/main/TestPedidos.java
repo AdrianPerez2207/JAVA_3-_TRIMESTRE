@@ -1,7 +1,14 @@
 package practicaStream.ejercicio2.main;
 
 import practicaStream.ejercicio2.entidades.Cliente;
+import practicaStream.ejercicio2.entidades.Pedido;
 import practicaStream.ejercicio2.entidades.Producto;
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TestPedidos {
 
@@ -27,6 +34,114 @@ public class TestPedidos {
         Producto producto13 = new Producto("Periferico 3", Producto.CategoriaProducto.PERIFERICOS, 52.2);
         Producto producto14 = new Producto("Periferico 4", Producto.CategoriaProducto.PERIFERICOS, 23.3);
         Producto producto15 = new Producto("Periferico 5", Producto.CategoriaProducto.PERIFERICOS, 63.8);
+
+        Pedido pedido1 = new Pedido(LocalDate.now(), LocalDate.now().plusDays(5),
+                Pedido.EstadoProducto.RECIBIDO, cliente1);
+        Pedido pedido2 = new Pedido(LocalDate.now().plusDays(1), LocalDate.now().plusDays(7),
+                Pedido.EstadoProducto.RECIBIDO, cliente2);
+        Pedido pedido3 = new Pedido(LocalDate.now(), LocalDate.now().plusDays(3),
+                Pedido.EstadoProducto.RECIBIDO, cliente3);
+        Pedido pedido4 = new Pedido(LocalDate.now().plusDays(3), LocalDate.now().plusDays(8),
+                Pedido.EstadoProducto.RECIBIDO, cliente1);
+
+        pedido1.setProductos(new HashSet<>(List.of(producto1, producto3, producto5, producto7)));
+        pedido2.setProductos(new HashSet<>(List.of(producto2, producto4, producto6, producto8, producto10)));
+        pedido3.setProductos(new HashSet<>(List.of(producto11, producto12, producto13, producto14, producto15)));
+        pedido4.setProductos(new HashSet<>(List.of(producto9, producto3, producto6, producto10)));
+
+        ArrayList<Pedido> pedidos = new ArrayList<>(List.of(pedido1, pedido2, pedido3, pedido4));
+
+        //STREAMS------------------------------------
+        //1. Muestra los libros cuyo precio sea mayor de 20€
+        pedidos.stream()
+                .flatMap(pedido -> pedido.getProductos().stream()
+                        .distinct()
+                        .filter(producto -> producto.getCategoria().equals(Producto.CategoriaProducto.LIBROS))
+                        .filter(producto -> producto.getPrecio() > 20))
+                .forEach(System.out::println);
+        System.out.println("---------------------------------------");
+        //2. Muestra los pedidos que tengan algún pedido de "Juegos"
+        pedidos.stream()
+                .filter(pedido -> pedido.getProductos().stream()
+                        .anyMatch(producto -> producto.getCategoria()
+                                .equals(Producto.CategoriaProducto.JUEGOS)))
+                .forEach(System.out::println);
+
+        System.out.println("---------------------------------------");
+        //3. Genera una lista con todos los Libros pero cambia su precio para que lleven un 10% de descuento
+        pedidos.stream()
+                .flatMap(pedido -> pedido.getProductos().stream()
+                        .peek(producto -> producto.setPrecio(producto.getPrecio() * 1.10)))
+                .forEach(System.out::println);
+
+        System.out.println("---------------------------------------");
+
+        //4. Saca los productos que aparecen en los pedidos de clientes de nivel 2, realizados entre el 20-04-
+        //2022 y el 20-05-2022. Hay que usar flatmap para unir todos los productos de todos los pedidos:
+        //.flatMap( p -> p.getProductos().stream())
+        pedidos.stream()
+                .filter(pedido -> pedido.getCliente().getNivel().equals(2))
+                .filter(pedido -> pedido.getFechaPedido().isAfter(LocalDate.of(2024, 04, 10))
+                        && pedido.getFechaPedido().isBefore(LocalDate.of(2024, 05, 20)))
+                .flatMap(pedido -> pedido.getProductos().stream())
+                .distinct()
+                .forEach(System.out::println);
+
+        System.out.println("---------------------------------------");
+
+        //5. Muestra el producto más caro de la categoría Juegos
+        Producto precioMaximo = List.of(producto1, producto2, producto3, producto4, producto5, producto6, producto7,
+                        producto8, producto9, producto10, producto11, producto12, producto13, producto14, producto15).stream()
+                .filter(producto -> producto.getCategoria().equals(Producto.CategoriaProducto.JUEGOS))
+                .max(Comparator.comparing(Producto::getPrecio))
+                .orElse(null);
+
+        System.out.println(precioMaximo);
+
+        System.out.println("---------------------------------------");
+        //6. Devuelve los dos pedidos más recientes
+        pedidos.stream()
+                .sorted(Comparator.comparing(Pedido::getFechaPedido).reversed())
+                .limit(2)
+                .forEach(System.out::println);
+
+        System.out.println("---------------------------------------");
+
+
+        //7. Muestra los pedidos hechos hoy, debe aparecer el pedido y debajo la lista de productos de ese
+        //pedido (peek y flatmap)
+        pedidos.stream()
+                .filter(pedido -> pedido.getFechaPedido().equals(LocalDate.now()))
+                .peek(pedido -> System.out.println("Pedido: " + pedido.getId()))
+                .forEach(pedido -> pedido.getProductos().stream()
+                        .forEach(System.out::println));
+
+        System.out.println("---------------------------------------");
+
+        //8. Calcula el total de todos los pedidos de Abril de 2022
+        Double precioTotal = pedidos.stream()
+                .filter(pedido -> pedido.getFechaPedido().getMonth().equals(Month.APRIL))
+                .flatMap(pedido -> pedido.getProductos().stream())
+                .mapToDouble(Producto::getPrecio)
+                .sum();
+        System.out.println(precioTotal + " € ");
+
+        System.out.println("---------------------------------------");
+
+
+        //9. Obtén una colección de estadísticas de los Juegos: número, media, máximo, mínimo, total. Hay que
+        //usar el método de Streams summaryStatistics() que devuelve un DoubleSummaryStatistics.
+        String estadísticas = pedidos.stream()
+                    .flatMap(pedido -> pedido.getProductos().stream())
+                    .filter(producto -> producto.getCategoria().equals(Producto.CategoriaProducto.JUEGOS))
+                    .collect(Collectors.summarizingDouble(Producto::getPrecio))
+                    .toString();
+        System.out.println(estadísticas);
+        System.out.println("---------------------------------------");
+        //
+        //
+        //
+
 
 
 
