@@ -7,6 +7,7 @@ import practicaStream.ejercicio2.entidades.Producto;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -138,9 +139,48 @@ public class TestPedidos {
                     .toString();
         System.out.println(estadísticas);
         System.out.println("---------------------------------------");
-        //
-        //
-        //
+
+        //10. Genera un Map<Long, Integer> donde como clave aparezca el id de pedido y como valor el número
+        //de productos en el pedido. Collectors.toMap, que el primer parámetro será función lambda para
+        //quedarnos con el id, y el segundo parámetro una función lambda para el tamaño del Set de
+        //productos.
+        Map<Long, Integer> mapa = pedidos.stream()
+                .collect(Collectors.toMap(Pedido::getId, pedido -> pedido.getProductos().size()));
+        mapa.forEach((k,v) -> System.out.println("Pedido: " + k + " nº de productos: " + v));
+        System.out.println("---------------------------------------");
+
+
+
+        //11. Genera un Map<Pedido, Double> donde la clave sea cada pedido y el valor sea el total del pedido.
+        //Hay que usar Collectors.toMap pero al poner la clave es el propio pedido, se pone
+        //Function.identity() en el primer parámetro de Collectors.toMap.
+        Map<Pedido, Double> valorPedidos = pedidos.stream()
+                .collect(Collectors.toMap(Function.identity(), pedido -> pedido.getProductos().stream()
+                                                                .mapToDouble(Producto::getPrecio)
+                                                                .sum()));
+        valorPedidos.forEach((k,v) -> System.out.println("Pedido: " + k + " total pedido: " + v));
+        System.out.println("---------------------------------------");
+
+
+        //12. Genera un Map<String, List<Producto>> con la clave la categoría, y el valor los productos de esa
+        //categoría. Usar Collectors.groupingBy.
+        Map<Producto.CategoriaProducto, List<Producto>> productosPorCategoria = pedidos.stream()
+                .flatMap(pedido -> pedido.getProductos().stream())
+                .collect(Collectors.groupingBy(Producto::getCategoria));
+        productosPorCategoria.forEach((k,v) -> {System.out.println("Producto: " + k);
+                                            v.forEach(System.out::println);
+        });
+
+
+        System.out.println("---------------------------------------");
+        //13. Saca el producto más caro de cada categoría. Genera un Map<String, Optional<Producto>>. Usar
+        //Collectors.groupingBy y Collectors.maxBy.
+        Map<Producto.CategoriaProducto, Optional<Producto>> productoMasCaroCategoria = pedidos.stream()
+                .flatMap(pedido -> pedido.getProductos().stream())
+                .collect(Collectors.groupingBy(Producto::getCategoria,
+                        Collectors.maxBy(Comparator.comparing(Producto::getPrecio))));
+
+        productoMasCaroCategoria.forEach((k,v) -> System.out.println("Producto: " + k + " - " + v.orElse(null)));
 
 
 
