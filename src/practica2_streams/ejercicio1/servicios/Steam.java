@@ -96,7 +96,7 @@ public class Steam {
      * pintamos el nick del usuario y las puntuaciones en ese juego con formato printf.
      */
     public void pintarRankingJuegos(){
-        juegos.forEach(juego -> {System.out.println("Nombre: " + juego.getNombre())
+        juegos.forEach(juego -> {System.out.println("Nombre: " + juego.getNombre());
                 jugadores.stream()
                         .filter(usuario -> usuario.getPuntuaciones().containsKey(juego.getId()))
                         .sorted(Comparator.comparing(usuario -> usuario.getPuntuacion(juego.getId())))
