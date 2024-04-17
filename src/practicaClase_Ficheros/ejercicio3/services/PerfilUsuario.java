@@ -6,13 +6,13 @@ import practicaClase_Ficheros.ejercicio3.models.Usuario;
 
 import java.util.*;
 
-public class VentasUsuario {
+public class PerfilUsuario {
     private Usuario usuario;
     private Set<Producto2Mano> productosDisponibles;
     private ArrayList<Compra> ventas;
     private ArrayList<Compra> comprasRealizadas;
 
-    public VentasUsuario(Usuario usuario) {
+    public PerfilUsuario(Usuario usuario) {
         this.usuario = usuario;
         this.productosDisponibles = new HashSet<>();
         this.ventas = new ArrayList<>();
@@ -42,7 +42,7 @@ public class VentasUsuario {
     @Override
     public String toString() {
         return "VentasUsuario{" +
-                "usuario=" + usuario +
+                "usuario=" + usuario.getLogin() +
                 ", productosDisponibles=" + productosDisponibles +
                 ", ventas=" + ventas +
                 ", comprasRealizadas=" + comprasRealizadas +
@@ -53,7 +53,7 @@ public class VentasUsuario {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VentasUsuario that = (VentasUsuario) o;
+        PerfilUsuario that = (PerfilUsuario) o;
         return Objects.equals(usuario, that.usuario);
     }
 

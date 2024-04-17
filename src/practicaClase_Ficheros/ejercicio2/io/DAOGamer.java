@@ -34,7 +34,7 @@ public class DAOGamer {
 
     public static void saveGamers(List<Gamer> gamers) throws IOException {
         //Open the file gamers.csv
-        Path fileGamers = Paths.get("practicaClase_Ficheros/ejercicio2", "resources", "gamers.csv");
+        Path fileGamers = Paths.get("src","practicaClase_Ficheros", "ejercicio2", "resources", "gamers.csv");
         BufferedWriter bw = Files.newBufferedWriter(fileGamers,
                 StandardOpenOption.CREATE,
                 StandardOpenOption.WRITE);

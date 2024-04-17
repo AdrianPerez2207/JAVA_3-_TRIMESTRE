@@ -62,9 +62,9 @@ public class Compra {
     @Override
     public String toString() {
         return "Compra{" +
-                "usuarioCompra=" + usuarioCompra +
-                ", usuarioVende=" + usuarioVende +
-                ", producto=" + producto +
+                "usuarioCompra=" + usuarioCompra.getLogin() +
+                ", usuarioVende=" + usuarioVende.getLogin() +
+                ", producto=" + producto.getNombre() +
                 ", fecha=" + fecha +
                 ", precioCompra=" + precioCompra +
                 '}';

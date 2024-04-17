@@ -10,10 +10,9 @@ public class Producto2Mano {
     private Estado estado;
     private Boolean envio;
     private Double precioVenta;
-    private Usuario usuario;
 
     public Producto2Mano(Long id, String nombre, String descripcion, Categoria categoria, Estado estado, Boolean envio,
-                         Double precioVenta, Usuario usuario) {
+                         Double precioVenta) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -21,7 +20,6 @@ public class Producto2Mano {
         this.estado = estado;
         this.envio = envio;
         this.precioVenta = precioVenta;
-        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -80,14 +78,6 @@ public class Producto2Mano {
         this.precioVenta = precio;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     @Override
     public String toString() {
         return "Producto2Mano{" +
@@ -98,7 +88,6 @@ public class Producto2Mano {
                 ", estado=" + estado +
                 ", envio=" + envio +
                 ", precio=" + precioVenta +
-                ", usuario=" + usuario +
                 '}';
     }
 

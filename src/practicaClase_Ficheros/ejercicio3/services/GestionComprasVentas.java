@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class GestionComprasVentas {
 
-    private Set<VentasUsuario> ventasTotales;
+    private Set<PerfilUsuario> ventasTotales;
     private List<Compra> comprasTotales;
 
     public GestionComprasVentas() {
@@ -20,7 +20,7 @@ public class GestionComprasVentas {
         this.comprasTotales = new ArrayList<>();
     }
 
-    public Set<VentasUsuario> getVentasTotales() {
+    public Set<PerfilUsuario> getVentasTotales() {
         return ventasTotales;
     }
 
@@ -36,8 +36,14 @@ public class GestionComprasVentas {
                 '}';
     }
     //Métodos.
-    public void realizarCompra(Usuario comprador, Producto2Mano producto){
-        Compra compra = new Compra(comprador, , producto, LocalDate.now());
+    public void addVenta(PerfilUsuario venta){
+        this.ventasTotales.add(venta);
+    }
+    public void eliminarVenta(PerfilUsuario venta){
+        this.ventasTotales.remove(venta);
+    }
+    public void realizarCompra(Usuario comprador, Usuario vendedor, Producto2Mano producto){
+        Compra compra = new Compra(comprador, vendedor , producto, LocalDate.now(), producto.getPrecioVenta());
         this.comprasTotales.add(compra);
     }
 }
