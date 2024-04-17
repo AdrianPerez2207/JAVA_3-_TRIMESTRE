@@ -43,7 +43,7 @@ public class Discord {
                 .sorted(Comparator.comparing(Gamer::getId))
                 .forEach(System.out::println);
     }
-    public Long getMasId(){
+    public Long getMaxId(){
         return gamers.stream()
                 .mapToLong(Gamer::getId)
                 .max()
