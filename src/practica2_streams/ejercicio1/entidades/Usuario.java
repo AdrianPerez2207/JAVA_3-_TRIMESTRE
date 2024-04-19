@@ -61,32 +61,30 @@ public class Usuario {
 
     /**
      * Comprobamos que el id del Juego exista, si existe comprobamos si ha ganado la partida o perdido
-     * Si ha ganado le incrementamos los partidos ganados y le añadimos los putos, en caso contrario añadimos o restamos puntos
+     * Si ha ganado le incrementamos los partidos ganados y le añadimos los puntos, en caso contrario añadimos o restamos puntos
      * Si la id no existe, creamos y añadimos la puntuación.
+     * Tenemos que añadir las puntuaciones al mapa
      * @param idJuego
      * @param haGanado
      * @param puntosObtenidos
      */
     public void addPuntuacion(Long idJuego, Boolean haGanado, Integer puntosObtenidos) {
-        if (puntuaciones.containsKey(idJuego)){
-            Puntuacion values = puntuaciones.get(idJuego);
-            if (haGanado){
-                values.setPartidasGanadas(values.getPartidasGanadas() + 1);
-            } else {
-                values.setPartidasPerdidas(values.getPartidasPerdidas() + 1);
-            }
-            values.setPartidasJugadas(values.getPartidasJugadas() + 1);
-            values.setPuntos(values.getPuntos() + puntosObtenidos);
-        } else {
-            Puntuacion puntuacionObtenida = new Puntuacion();
-            puntuacionObtenida.setPartidasJugadas(puntuacionObtenida.getPartidasJugadas() + 1);
-            if (haGanado){
-                puntuacionObtenida.setPartidasGanadas(puntuacionObtenida.getPartidasGanadas() + 1);
-            } else {
-                puntuacionObtenida.setPartidasPerdidas(puntuacionObtenida.getPartidasPerdidas() + 1);
-            }
-            puntuacionObtenida.setPuntos(puntuacionObtenida.getPuntos() + puntosObtenidos);
+        if (puntuaciones.get(idJuego) == null){
+            Puntuacion nuevasPuntuaciones = new Puntuacion();
+            puntuaciones.put(idJuego, nuevasPuntuaciones);
+            nuevasPuntuaciones.setPartidasGanadas(0);
+            nuevasPuntuaciones.setPartidasPerdidas(0);
+            nuevasPuntuaciones.setPartidasJugadas(0);
+            nuevasPuntuaciones.setPuntos(0);
         }
+        Puntuacion puntuacionesRecuperadas = puntuaciones.get(idJuego);
+        if (haGanado){
+            puntuacionesRecuperadas.setPartidasGanadas(puntuacionesRecuperadas.getPartidasGanadas() + 1);
+        } else {
+            puntuacionesRecuperadas.setPartidasPerdidas(puntuacionesRecuperadas.getPartidasPerdidas() + 1);
+        }
+        puntuacionesRecuperadas.setPuntos(puntuacionesRecuperadas.getPuntos() + puntosObtenidos);
+        puntuacionesRecuperadas.setPartidasJugadas(puntuacionesRecuperadas.getPartidasJugadas() + 1);
     }
 
     /**

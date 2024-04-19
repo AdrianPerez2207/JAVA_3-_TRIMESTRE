@@ -100,7 +100,7 @@ public class Steam {
                 jugadores.stream()
                         .filter(usuario -> usuario.getPuntuaciones().containsKey(juego.getId()))
                         .sorted(Comparator.comparing(usuario -> usuario.getPuntuacion(juego.getId())))
-                        .forEach(usuario -> System.out.printf("Nick: %s - Puntuación: %d", usuario.getNick(),
+                        .forEach(usuario -> System.out.printf("Nick: %s - Puntuación: %d" + "\n", usuario.getNick(),
                                 usuario.getPuntuacion(juego.getId())));
         });
     }

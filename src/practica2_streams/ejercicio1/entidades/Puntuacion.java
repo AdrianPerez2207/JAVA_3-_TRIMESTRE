@@ -7,6 +7,10 @@ public class Puntuacion {
     private Integer partidasPerdidas;
 
     public Puntuacion() {
+        this.puntos = 0;
+        this.partidasJugadas = 0;
+        this.partidasGanadas = 0;
+        this.partidasPerdidas = 0;
     }
 
     public Integer getPuntos() {

@@ -5,7 +5,40 @@ import practica2_streams.ejercicio1.entidades.Puntuacion;
 import practica2_streams.ejercicio1.entidades.Usuario;
 import practica2_streams.ejercicio1.servicios.Steam;
 
-public class Main {
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class TestPuntuaciones {
+    //Método que reciba como parámetro un Usuario y muestre todas sus puntuaciones (puntos,
+    //partidas jugadas, …) ordenadas por puntos.
+    public static void puntuacionesJugador(Usuario usuario1, Steam steam){
+        steam.getJugadores().stream()
+                .filter(usuario -> usuario.equals(usuario1))
+                .peek(usuario -> System.out.println("Nombre: " + usuario.getNick()))
+                .flatMap(usuario -> usuario.getPuntuaciones().values().stream())
+                .sorted(Comparator.comparing(usuario -> usuario.getPuntos()))
+                .forEach(System.out::println);
+    }
+    //Método que muestre cada usuario (Nick) y para cada uno la puntuación de los juegos a los
+    //que juega.
+    private static void usuariosYPuntuaciones(Steam steam) {
+        steam.getJugadores().stream()
+                .sorted(Comparator.comparing(Usuario::getNick))
+                .peek(usuario -> System.out.println("Usuario: " + usuario.getNick()))
+                .flatMap(usuario -> usuario.getPuntuaciones().values().stream())
+                .forEach(System.out::println);
+    }
+    //Muestra por pantalla todos los usuarios ordenados por Nick, muestra email y Nick
+    private static void usuariosOrdenadosNick(Steam steam) {
+        System.out.println("Usuarios ordenados por nick: ");
+        steam.getJugadores().stream()
+                .sorted(Comparator.comparing(Usuario::getNick))
+                .forEach(usuario -> System.out.printf("Nick: %s - Email: %s", usuario.getNick(), usuario.getEmail() + "\n"));
+    }
+
+
 
     public static void main(String[] args) {
         Juego j1 = new Juego("Hunt Showdown", "Steam");
@@ -114,14 +147,14 @@ public class Main {
         u10.addPuntuacion(j7.getId(), true, 200);
         u10.addPuntuacion(j10.getId(), false, 10);
 
-        //Probar métodos
-        System.out.println(steam.obtenerPuntuaciones(j7.getId()));
-        System.out.println("-----------------------");
-        System.out.println(steam.listarJuegos());
-        System.out.println("-----------------------");
-        steam.buscarPuntuacion(j1.getId(), u1.getId());
-        System.out.println("-----------------------");
-        steam.pintarRankingJuegos();
+
+
+        usuariosOrdenadosNick(steam);
+        System.out.println("-----------------------------------");
+        usuariosYPuntuaciones(steam);
+        System.out.println("-----------------------------------");
+        puntuacionesJugador(u4, steam);
+
 
 
     }
