@@ -11,6 +11,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TestPuntuaciones {
+    //Método pinte el ranking de los juegos. Es decir, cada juego y debajo el ranking de los
+    //jugadores que lo juegan ordenados por puntuación.
+    private static void rankingJuegos(Steam steam) {
+        steam.getJuegos().stream()
+                .forEach(juego -> {
+                    System.out.println("------------- " + juego.getNombre() + " -------------");
+                    steam.getJugadores().stream()
+                            .filter(jugador -> jugador.getPuntuaciones().containsKey(juego.getId()))
+                            .sorted((usu1, usu2) -> usu2.getPuntuacion(juego.getId()).compareTo(usu1.getPuntuacion(juego.getId())))
+                            .forEach(jugador -> System.out.println(jugador.getNick() + " " + jugador.getPuntuacion(juego.getId())));
+                });
+    }
     //Método que reciba como parámetro un Usuario y muestre todas sus puntuaciones (puntos,
     //partidas jugadas, …) ordenadas por puntos.
     public static void puntuacionesJugador(Usuario usuario1, Steam steam){
@@ -154,7 +166,8 @@ public class TestPuntuaciones {
         usuariosYPuntuaciones(steam);
         System.out.println("-----------------------------------");
         puntuacionesJugador(u4, steam);
-
+        System.out.println("-----------------------------------");
+        rankingJuegos(steam);
 
 
     }
