@@ -42,8 +42,8 @@ public class DAOGamer {
         //gamers.stream()
         //        .forEach(gamer ->{
                     //ForEach gamer genera un String por línea
+        StringBuffer sb = new StringBuffer();
         for(Gamer gamer : gamers){
-            StringBuffer sb = new StringBuffer();
             sb.append(gamer.getId()).append(",");
             sb.append(gamer.getNick()).append(",");
             sb.append(gamer.getEmail()).append(",");
