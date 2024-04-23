@@ -54,15 +54,15 @@ public class Test {
         DAOLectura.getTemperaturaPorFinca(10L).forEach(System.out::println);
         System.out.println("-------------------------");
         System.out.println("Temperatura por día");
-        DAOLectura.getTempDiaPorFinca(4L, LocalDate.of(2024, 4, 6))
+        DAOLectura.getTempDiaPorFinca(8L, LocalDate.of(2023, 11, 3))
                 .forEach(System.out::println);
 
         //Eliminamos las lecturas.
-        DAOLectura.removeLectura(DAOLectura.findById(998L));
-        DAOLectura.removeLectura(DAOLectura.findById(990L));
-        DAOLectura.removeLectura(DAOLectura.findById(996L));
-        DAOLectura.removeLectura(DAOLectura.findById(8L));
-        DAOLectura.removeLectura(DAOLectura.findById(6L));
+        DAOLectura.removeLectura(DAOLectura.findById(10L));
+        DAOLectura.removeLectura(DAOLectura.findById(27L));
+        DAOLectura.removeLectura(DAOLectura.findById(900L));
+        DAOLectura.removeLectura(DAOLectura.findById(845L));
+        DAOLectura.removeLectura(DAOLectura.findById(345L));
 
         DAOLectura.guardarDatos();
     }
