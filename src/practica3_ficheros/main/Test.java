@@ -58,11 +58,11 @@ public class Test {
                 .forEach(System.out::println);
 
         //Eliminamos las lecturas.
-        DAOLectura.removeLectura(DAOLectura.findById(10L));
-        DAOLectura.removeLectura(DAOLectura.findById(27L));
-        DAOLectura.removeLectura(DAOLectura.findById(900L));
-        DAOLectura.removeLectura(DAOLectura.findById(845L));
-        DAOLectura.removeLectura(DAOLectura.findById(345L));
+        DAOLectura.removeLectura(DAOLectura.findById(1000L));
+        //DAOLectura.removeLectura(DAOLectura.findById(27L));
+        //DAOLectura.removeLectura(DAOLectura.findById(900L));
+        //DAOLectura.removeLectura(DAOLectura.findById(845L));
+        //DAOLectura.removeLectura(DAOLectura.findById(345L));
 
         DAOLectura.guardarDatos();
     }

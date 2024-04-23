@@ -53,6 +53,8 @@ public class DAOLectura {
      */
     public static void guardarDatos() throws IOException {
         Path ficheroLecturas = Paths.get("src", "practica3_ficheros", "resources", "lecturas.csv");
+        Files.deleteIfExists(ficheroLecturas);
+
         BufferedWriter bw = Files.newBufferedWriter(ficheroLecturas,
                 StandardOpenOption.CREATE,
                 StandardOpenOption.WRITE);
