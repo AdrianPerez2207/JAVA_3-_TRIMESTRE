@@ -1,6 +1,7 @@
 package practica3_ficheros.main;
 
 import practica3_ficheros.entidades.Finca;
+import practica3_ficheros.entidades.Lectura;
 import practica3_ficheros.io.DAOFinca;
 import practica3_ficheros.io.DAOLectura;
 
@@ -55,5 +56,14 @@ public class Test {
         System.out.println("Temperatura por día");
         DAOLectura.getTempDiaPorFinca(4L, LocalDate.of(2024, 4, 6))
                 .forEach(System.out::println);
+
+        //Eliminamos las lecturas.
+        DAOLectura.removeLectura(DAOLectura.findById(998L));
+        DAOLectura.removeLectura(DAOLectura.findById(990L));
+        DAOLectura.removeLectura(DAOLectura.findById(996L));
+        DAOLectura.removeLectura(DAOLectura.findById(8L));
+        DAOLectura.removeLectura(DAOLectura.findById(6L));
+
+        DAOLectura.guardarDatos();
     }
 }

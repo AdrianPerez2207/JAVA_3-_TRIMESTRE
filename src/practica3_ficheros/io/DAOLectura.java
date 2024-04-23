@@ -74,6 +74,12 @@ public class DAOLectura {
     public static void removeLectura(Lectura lectura){
         lecturas.remove(lectura);
     }
+    public static Lectura findById(Long id){
+        return lecturas.stream()
+                .filter(lectura -> lectura.getId().equals(id))
+                .findFirst()
+                .orElseThrow();
+    }
     //Streams---
 
     /**
