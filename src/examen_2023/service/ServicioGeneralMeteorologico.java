@@ -161,5 +161,24 @@ public class ServicioGeneralMeteorologico {
                .collect(Collectors.toMap(EstacionMeteorologica::getNombre, estacion -> estacion.getRegistros().stream()
                        .count()));
     }
+    /**
+     * Buscamos una estación por Id
+     * @param id
+     */
+    public EstacionMeteorologica getEstacionPorId(Long id){
+        return estaciones.stream()
+               .filter(estacion -> estacion.getId().equals(id))
+               .findFirst()
+               .orElseThrow();
+    }
+    /**
+     * Buscamos la estacion y el registro que contenga
+     */
+    public EstacionMeteorologica getEstacionPorRegistro(RegistroDatosDia registro){
+        return estaciones.stream()
+               .filter(estacion -> estacion.getRegistros().contains(registro))
+               .findFirst()
+               .orElseThrow();
+    }
 
 }
